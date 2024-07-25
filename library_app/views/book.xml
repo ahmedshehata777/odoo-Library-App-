@@ -1,0 +1,113 @@
+<odoo>
+    <record id="book_tree_view" model="ir.ui.view">
+        <field name="name">book.tree.view</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!--                <field name="name" string="Ref"/>-->
+                <!--                <field name="id"/>-->
+                <field name="name"/>
+                <field name="code"/>
+                <field name="published_date"/>
+                <field name="state" widget="badge"
+                       decoration-danger="state == 'published'"
+                       decoration-primary="state == 'draft'"
+                       decoration-success="state == 'confirm'"/>
+                <field name="active" optional="0"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="book_form_view" model="ir.ui.view">
+        <field name="name">book.form.view</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <header>
+                    <button name="action_add_publisher" type="object" string="Add publisher" class="btn-primary"/>
+                    <button name="action_draft" type="object" string="Set To Draft" class="btn-danger"
+                            invisible="state != 'confirm'"/>
+                    <button name="action_confirmed" type="object" string="Set To Confirm" class="btn-secondary"/>
+                    <button name="action_published" type="object" string="Set To publish" class="btn-primary"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    <!--                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>-->
+                    <!--                    <field name="state" widget="statusbar" statusbar_visible="draft,published" />-->
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ref" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="General Info.">
+                            <!--                            <field name="name" string="Ref"/>-->
+                            <field name="name"/>
+                            <field name="code" groups="library_app.library_manager_group" />
+                            <!--                            <field name="state"/>-->
+                        </group>
+                        <group string="Additional Info.">
+                            <field name="published_date"/>
+                            <field name="age"/>
+                            <field name="publisher_id" readonly="1"/>
+                            <field name="active"/>
+                            <field name="image"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Prints">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="discription"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    <record id="book_search_view" model="ir.ui.view">-->
+    <!--        <field name="name">book.search.view</field>-->
+    <!--        <field name="model">library.book</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search>-->
+    <!--                <field name="code"/>-->
+    <!--                <field name="name"/>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="library_book_action" model="ir.actions.act_window">
+        <field name="name">Library Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_server_published_state" model="ir.actions.server">
+        <field name="name">Published</field>
+        <field name="model_id" ref="library_app.model_library_book"/>
+        <field name="binding_model_id" ref="library_app.model_library_book"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.server_published_state()
+        </field>
+    </record>
+
+
+    <menuitem id="menuitem_library_book"
+              name="Books"
+              parent="menu_root_book"
+              action="library_book_action"/>
+</odoo>

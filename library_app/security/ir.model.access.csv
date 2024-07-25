@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_book,access_book,model_library_book,,1,1,1,"1"
+"access_publisher","access_publisher","model_library_publisher",,1,1,1,"1"
+"access_publisher_wizard","access_publisher_wizard","model_publisher_wizard",,1,1,1,1
+"access_library_book_line","access_library_book_line","model_library_book_line",,1,1,1,1

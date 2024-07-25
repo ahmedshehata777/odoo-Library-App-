@@ -1,0 +1,25 @@
+{
+    'name': "Library App",
+    'summary': """ """,
+    'description': """ """,
+    'author': "Ahmed Shehata",
+    'category': 'Productivity',
+    'version': '17.0.0.1.0',
+    'depends': ['base',
+                'mail',
+                'sale_management',
+                ],
+    'application': True,
+    'data': [
+        'data/data.xml',
+        'data/cron.xml',
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'views/base_menus.xml',
+        'views/book.xml',
+        'views/publisher.xml',
+        'wizard/add_publisher_wizard.xml',
+        'views/sale_order.xml',
+
+    ],
+}
